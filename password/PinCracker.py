@@ -14,4 +14,5 @@ while guess != pin:
     
   print("Trying...", guess)
   time.sleep(0.0001)
-print("\npin CRACKED: ", pin)
+print("\nPIN CRACKED: ", pin)
+print("\nGotta change ur pin password bro\n")
