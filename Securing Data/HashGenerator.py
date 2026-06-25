@@ -2,7 +2,7 @@ import hashlib
 from cryptography.hazmat.primitives import hashes
 
 while True:
-  print("\n" + "#="*3 + " Hashed Message Simulation " + "+#"*3)
+  print("\n" + "#="*3 + " Hash Simulation " + "+#"*3)
   print("1. Hash Message")
   print("2. Hash Password")
   print("3. Register & Login")
@@ -21,9 +21,9 @@ while True:
     hash_message = hashlib.sha256(
       message.encode()
     ).hexdigest()
-    print(hash_message)
+    print("Hashed Message:\n", hash_message)
     
-    if input("Select another menu? (y/n): ").lower() != "y":
+    if input("\nSelect another menu? (y/n): ").lower() != "y":
       print("\nExit the program\n")
       break
     
