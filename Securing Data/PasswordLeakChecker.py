@@ -1,23 +1,32 @@
-leaked_pass = [
-  '12345678',
-  '123456',
-  'admin123',
-  'pass1234',
-  'qwerty',
-  'password'
-  '654321',
-  '87654321'
-]
+breach_database = {
+    "LinkedIn": [
+        "123456",
+        "password",
+        "linkedin123"
+    ],
+    "Google": [
+        "qwerty",
+        "welcome123"
+        '12345678',
+        'pass1234',
+        'qwerty',
+        '654321',
+        '87654321'
+    ],
+    "Instagram": [
+        "letmein",
+        "admin123"
+    ]
+}
 
 while True:
   print("\n"+"#="*3 + " Password Leak Checker " + "=#"*3)
   print("1. Check Password")
   print("2. View Database")
-  print("3. Add Leaked Password")
-  print("4. Exit")
+  print("3. Exit")
   
   try:
-    menu = int(input("Select menu (1-4): "))
+    menu = int(input("Select menu (1-3): "))
   except ValueError:
     print(">>> Please select a valid number of the menu.")
     continue
@@ -25,45 +34,38 @@ while True:
   if menu == 1:
     print("\n"+"#="*3 + " Check Password " + "=#"*3)
     
-    password = input("\nPassword: ").lower
+    password = input("\nPassword: ").lower()
     
-    if password in leaked_pass:
-      print("WARNING!\nPassword found in the leaked database.")
-    else:
-      print("SAFE.\nPassword not found in the leaked database.")
+    found_in = []
     
+    for company in breach_database:
+      if password in breach_database[company]:
+        found_in.append(company)
+
+    if found_in:
+        print("WARNING!\nPassword found in the leaked database.")
+    for company in found_in:
+      print(f"Found in {company}")
+      
+    else: print("\nSAFE\nPassword not found in the leaked database.")
+
     if input("\nTry another menu? (y/n): ").lower() != "y":
-      print("\nExit the program\n")
-      break
-    
+        print("\nExit the program\n")
+        break
   elif menu == 2:
     print("\n"+"#="*3 + " Leaked Password Database " + "=#"*3)
     
-    for i, password in enumerate(
-      leaked_pass,
-      start=1
-    ):
-      print(f"{i}. {password}")
-    
-    if input("\nTry another menu? (y/n): ").lower() != "y":
-      print("\nExit the program\n")
-      break
-    
-  elif menu == 3:
-    print("\n"+"#="*3 + " Add Leaked Password " + "=#"*3)
-
-    new_pass = input("\nNew Leaked Password: ").lower()
-    
-    leaked_pass.append(
-      new_pass
-    )
-    print("Password added.")
+    for company in breach_database:
+      print(f"\n{company}")
+      
+      for password in breach_database[company]:
+        print(f"  - {password}")
     
     if input("\nTry another menu? (y/n): ").lower() != "y":
       print("\nExit the program\n")
       break
   
-  elif menu == 4:
+  elif menu == 3:
     print("\nExit the program\n")
     break
   else:
