@@ -2,6 +2,7 @@ leaked_pass = [
   '12345678',
   '123456',
   'admin123',
+  'pass1234',
   'qwerty',
   'password'
   '654321',
@@ -31,7 +32,7 @@ while True:
     else:
       print("SAFE.\nPassword not found in the leaked database.")
     
-    if input("\nTry another menu? (y/n: )").lower() != "y":
+    if input("\nTry another menu? (y/n): ").lower() != "y":
       print("\nExit the program\n")
       break
     
@@ -44,9 +45,26 @@ while True:
     ):
       print(f"{i}. {password}")
     
-    if input("\nTry another menu? (y/n: )").lower() != "y":
+    if input("\nTry another menu? (y/n): ").lower() != "y":
       print("\nExit the program\n")
       break
     
+  elif menu == 3:
+    print("\n"+"#="*3 + " Add Leaked Password " + "=#"*3)
+
+    new_pass = input("\nNew Leaked Password: ").lower()
+    
+    leaked_pass.append(
+      new_pass
+    )
+    print("Password added.")
+    
+    if input("\nTry another menu? (y/n): ").lower() != "y":
+      print("\nExit the program\n")
+      break
+  
+  elif menu == 4:
+    print("\nExit the program\n")
+    break
   else:
     print("\n>>> Please select a valid number of menu.")
