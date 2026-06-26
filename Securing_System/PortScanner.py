@@ -12,13 +12,13 @@ while True:
   
   # target
   try:
-    target = int(input("\nTarget IP (1-3): "))
+    target = int(input("\nTarget IP (1-3)\t: "))
     
     if target == 1:
       host = "127.0.0.1"              # scan target port (localhost)
     elif target == 2:
       try:
-        host = input("IP Address: ")
+        host = input("IP Address\t: ")
         ipaddress.ip_address(host)
       except ValueError:
         print(">>> Input a valid IP address. Example: 192.168.1.1")
@@ -35,8 +35,8 @@ while True:
     
   # range port
   try:
-    start = int(input("Start Port: "))
-    end = int(input("End Port: "))
+    start = int(input("Start Port\t: "))
+    end = int(input("End Port\t: "))
   except ValueError:
     print(">>> Please input a valid number of port")
     continue
@@ -50,6 +50,7 @@ while True:
   # start scanning
   print(f"\nScanning {host}...\n")
 
+  results = []
   # logic scan port
   start_time = time.time()
   for port in range(start, end+1):
@@ -68,13 +69,30 @@ while True:
         service = socket.getservbyport(port)
       except OSError:
         service = "Unknown"
-      print(f"Port {port:<5} : OPEN ({service})")
-      
+        
+      output = f"Port {port:<5} : OPEN ({service})"
+      print(output)
+      results.append(output)
     sock.close()
   # timer
   end_time = time.time()
   duration = end_time - start_time
   print(f"\nScan Finished in {duration:.2f} seconds.")
+  
+  # save result
+  if input("\nSave result to scan_result.txt? (y/n): ").lower() == "y":
+    with open("scan_result.txt", "w") as file:
+      file.write(f"Target\t\t\t: {host}\n")
+      file.write(f"Port Range\t: {start}-{end}\n")
+      file.write(f"Duration\t\t: {duration:.2f} seconds\n")
+      file.write("-"*40 + "\n")
+      
+      if results:
+        for result in results:
+          file.write(result + "\n")
+      else:
+        file.write("No open ports found\n")
+    print("Result saved to scan_result.txt")
   
   # end program
   if input("Scan Port Again? (y/n): ").lower() != "y":
