@@ -42,14 +42,18 @@ while True:
       socket.AF_INET,             # using IPv4
       socket.SOCK_STREAM          # using TCP 
     )
-    sock.settimeout(0.1)
+    sock.settimeout(0.01)
     
     result = sock.connect_ex(     # return number with connect_ex(), not connect()
       (host, port)                # if succeed, result 0, else result != 0
     )
     
     if result == 0:
-      print(f"Port {port} : OPEN")
+      try:
+        service = socket.getservbyport(port)
+      except OSError:
+        service = "Unknown"
+      print(f"Port {port:<5} : OPEN ({service})")
       
     sock.close()
   print("\nScan Finished.")
