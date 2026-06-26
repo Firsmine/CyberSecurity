@@ -51,6 +51,8 @@ while True:
   print(f"\nScanning {host}...\n")
 
   results = []
+  open_ports = 0
+  closed_ports = 0
   # logic scan port
   start_time = time.time()
   for port in range(start, end+1):
@@ -66,18 +68,32 @@ while True:
     
     if result == 0:
       try:
+        open_ports += 1
         service = socket.getservbyport(port)
       except OSError:
         service = "Unknown"
-        
-      output = f"Port {port:<5} : OPEN ({service})"
+      output = f"[{port:<5}] : OPEN ({service})"
       print(output)
       results.append(output)
+    else:
+      closed_ports += 1
+      print(f"[{port:<5}] : CLOSED")
     sock.close()
   # timer
   end_time = time.time()
   duration = end_time - start_time
-  print(f"\nScan Finished in {duration:.2f} seconds.")
+  print(f"\nScan Finished.")
+  print("\n" + "="*8 + " Scan Summary " + "="*8)
+  print(f"Open Ports   : {open_ports}")
+  print(f"Closed Ports : {closed_ports}")
+  print(f"Duration     : {duration:.2f} seconds")
+  
+  print("\nOpen Port List")
+  if results:
+    for port in results:
+      print("*", port)
+  else:
+    print("No open ports detected")
   
   # save result
   if input("\nSave result to scan_result.txt? (y/n): ").lower() == "y":
@@ -85,6 +101,8 @@ while True:
       file.write(f"Target\t\t\t: {host}\n")
       file.write(f"Port Range\t: {start}-{end}\n")
       file.write(f"Duration\t\t: {duration:.2f} seconds\n")
+      file.write(f"Open Ports\t: {open_ports}\n")
+      file.write(f"Closed Ports: {closed_ports}\n")
       file.write("-"*40 + "\n")
       
       if results:
