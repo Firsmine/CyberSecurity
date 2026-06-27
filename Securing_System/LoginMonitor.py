@@ -1,7 +1,10 @@
 import time
+from datetime import datetime
 
 users = {
-  "User":"User1234"
+  "User":"User1234",
+  "ADMIN":"Admin123",
+  "Guest":"Guest123",
 }
 failed_attempt = 0
 is_locked = False
@@ -15,13 +18,16 @@ while True:
   if username in users:
     if users[username] == password:
       print("\nLogin Succeed!")
+      print(datetime.now())
       failed_attempt = 0
     else:
       failed_attempt += 1
       print("\nWrong Password.")
+      print(datetime.now())
   else:
     failed_attempt += 1
     print("\nUsername Not Found.")
+    print(datetime.now())
   
   print(f"Failed attempts: {failed_attempt}")
 
