@@ -23,7 +23,7 @@ while True:
   print("8. Exit")
   
   try:
-    menu = int(input("Select Menu (1-5): "))
+    menu = int(input("Select Menu (1-8): "))
   except ValueError:
     print(">>> Please enter a valid number of menu.")
     continue
@@ -132,7 +132,22 @@ while True:
   elif menu == 5:
     print("\n" + "#="*5 + " View Registered File " + "=#"*5)
     
-    # incoming
+    if not os.path.exists(HASH_FILE):
+      print(">>> No registered file.")
+      continue
+
+    with open(HASH_FILE, "r") as file:
+      lines = file.readlines()
+    print()
+    
+    count = 1
+    for line in lines[2:]:
+      parts = line.strip().split("|")
+      if len(parts) != 3:
+        continue
+      filename = parts[1].strip()
+      print(f"{count}. {filename}")
+      count += 1
     
     if input(f"\nTry Another Menu? (y/n): ").lower() != "y":
       print("\nProgram Ended.\n")
