@@ -119,6 +119,15 @@ while True:
       print("\nProgram Ended.\n")
       break
     
+  elif menu == 5:
+    print("\n" + "#="*5 + " View Registered File " + "=#"*5)
+    
+    # incoming
+    
+    if input(f"\nTry Another Menu? (y/n): ").lower() != "y":
+      print("\nProgram Ended.\n")
+      break
+    
   elif menu == 8:
     if input(f"Exit the program? (y/n): ").lower() == "y":
       print("\nProgram Ended.\n")
