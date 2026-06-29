@@ -1,6 +1,10 @@
 import hashlib, os
+from datetime import datetime
 
 HASH_FILE = "hash.txt"
+
+def current_time():
+  return datetime.now().strftime("%Y-%m-%d %H:%M")
 
 def get_hash(filename):
   with open(filename, "rb") as file:
@@ -13,7 +17,10 @@ while True:
   print("2. Verify File")
   print("3. Modify File")
   print("4. View Hash")
-  print("5. Exit")
+  print("5. View Registered File")
+  print("6. Delete File")
+  print("7. Verify All Files")
+  print("8. Exit")
   
   try:
     menu = int(input("Select Menu (1-5): "))
@@ -31,12 +38,20 @@ while True:
       continue
 
     file_hash = get_hash(filename)
+    time = current_time()
     
-    with open(HASH_FILE, "w") as file:
-      file.write(file_hash)
+    if not os.path.exists(HASH_FILE):    
+      with open(HASH_FILE, "w") as file:
+        file.write(f"{"TIME":^16} | {"FILE":^20} | {"HASH"}")
+        file.write("\n" + "-"*80 + "\n")
+    
+    with open(HASH_FILE, "a") as file:
+      file.write(f"{time!s:<16} | {filename:^20} | {file_hash}\n")
     
     print("\n>>> File Registered.")
-    print(file_hash)
+    print("File\t: " + filename )
+    print("Hash\t: " + file_hash)
+    print("Time\t: " + time)
     
     if input(f"\nTry Another Menu? (y/n): ").lower() != "y":
       print("\nProgram Ended.\n")
@@ -104,7 +119,7 @@ while True:
       print("\nProgram Ended.\n")
       break
     
-  elif menu == 5:
+  elif menu == 8:
     if input(f"Exit the program? (y/n): ").lower() == "y":
       print("\nProgram Ended.\n")
       break
