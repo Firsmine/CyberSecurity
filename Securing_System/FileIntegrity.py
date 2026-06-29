@@ -32,7 +32,7 @@ while True:
     print("\n" + "#="*5 + " Register File " + "=#"*5)
     
     filename = input("Filename: ")
-
+    
     if not os.path.exists(filename):
       print(">>> File not found in your device.")
       continue
@@ -43,7 +43,7 @@ while True:
     if not os.path.exists(HASH_FILE):    
       with open(HASH_FILE, "w") as file:
         file.write(f"{"TIME":^16} | {"FILE":^20} | {"HASH"}")
-        file.write("\n" + "-"*80 + "\n")
+        file.write("\n" + "-"*100 + "\n")
     
     with open(HASH_FILE, "a") as file:
       file.write(f"{time!s:<16} | {filename:^20} | {file_hash}\n")
@@ -71,16 +71,26 @@ while True:
       continue
     
     current_hash = get_hash(filename)
+    saved_hash = None
     
-    with open(HASH_FILE) as file:
-      saved_hash = file.read()
-      
-    if current_hash == saved_hash:
+    with open(HASH_FILE, "r") as file:
+      lines = file.readlines()
+      for line in lines[2:]:
+        parts = line.strip().split("|")
+        file_name = parts[1].strip()
+        file_hash = parts[2].strip()
+        if file_name == filename:
+          saved_hash = file_hash
+          break
+        
+    if saved_hash is None:
+      print(">>> File has not been registered.")
+    elif current_hash == saved_hash:
       print("\nVALID")
       print("File has not been modified.")
     else:
       print("\nWARNING")
-      print("File modified!")
+      print("File has been modified.")
     
     if input(f"\nTry Another Menu? (y/n): ").lower() != "y":
       print("\nProgram Ended.\n")
