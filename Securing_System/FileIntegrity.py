@@ -136,6 +136,15 @@ while True:
     if input(f"\nTry Another Menu? (y/n): ").lower() != "y":
       print("\nProgram Ended.\n")
       break
+  
+  elif menu == 7:
+    print("\n" + "#="*5 + " Verify All File " + "=#"*5)
+    
+    # incoming
+    
+    if input(f"\nTry Another Menu? (y/n): ").lower() != "y":
+      print("\nProgram Ended.\n")
+      break
     
   elif menu == 8:
     if input(f"Exit the program? (y/n): ").lower() == "y":
