@@ -128,6 +128,15 @@ while True:
       print("\nProgram Ended.\n")
       break
     
+  elif menu == 6:
+    print("\n" + "#="*5 + " Delete File " + "=#"*5)
+    
+    # incoming
+    
+    if input(f"\nTry Another Menu? (y/n): ").lower() != "y":
+      print("\nProgram Ended.\n")
+      break
+    
   elif menu == 8:
     if input(f"Exit the program? (y/n): ").lower() == "y":
       print("\nProgram Ended.\n")
