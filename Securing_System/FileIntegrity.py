@@ -200,7 +200,13 @@ while True:
   elif menu == 7:
     print("\n" + "#="*5 + " Verify All File " + "=#"*5)
     
-    # incoming
+    if not os.path.exists(HASH_FILE):
+      print(">>> No database.")
+      continue
+
+    valid = 0
+    modified = 0
+    missing = 0
     
     if input(f"\nTry Another Menu? (y/n): ").lower() != "y":
       print("\nProgram Ended.\n")
