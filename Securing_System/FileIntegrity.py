@@ -208,6 +208,9 @@ while True:
     modified = 0
     missing = 0
     
+    with open(HASH_FILE, "r") as file:
+      lines = file.readlines()
+    
     if input(f"\nTry Another Menu? (y/n): ").lower() != "y":
       print("\nProgram Ended.\n")
       break
