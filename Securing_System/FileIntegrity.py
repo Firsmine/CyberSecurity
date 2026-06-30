@@ -223,6 +223,15 @@ while True:
         print(f"{filename:<20} MISSING")
         missing += 1
         continue
+      
+      current_hash = get_hash(filename)
+
+      if current_hash == saved_hash:
+        print(f"{filename:<20} VALID")
+        valid += 1
+      else:
+        print(f"{filename:<20} MODIFIED")
+        modified += 1
     
     if input(f"\nTry Another Menu? (y/n): ").lower() != "y":
       print("\nProgram Ended.\n")
