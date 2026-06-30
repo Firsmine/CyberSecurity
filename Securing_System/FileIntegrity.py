@@ -210,6 +210,19 @@ while True:
     
     with open(HASH_FILE, "r") as file:
       lines = file.readlines()
+      
+    for line in lines[2:]:
+      parts = line.strip().split("|")
+      if len(parts) != 3:
+        continue
+
+      filename = parts[1].strip()
+      saved_hash = parts[2].strip()
+
+      if not os.path.exists(filename):
+        print(f"{filename:<20} MISSING")
+        missing += 1
+        continue
     
     if input(f"\nTry Another Menu? (y/n): ").lower() != "y":
       print("\nProgram Ended.\n")
