@@ -154,9 +154,44 @@ while True:
       break
     
   elif menu == 6:
-    print("\n" + "#="*5 + " Delete File " + "=#"*5)
+    print("\n" + "#="*5 + " Delete Registered File " + "=#"*5)
     
-    # incoming
+    if not os.path.exists(HASH_FILE):
+      print(">>> No database.")
+      continue
+
+    filename = input("Filename : ")
+
+    with open(HASH_FILE, "r") as file:
+      lines = file.readlines()
+
+    new_lines = []
+    new_lines.append(lines[0])
+    new_lines.append(lines[1])
+
+    deleted = False
+
+    for line in lines[2:]:
+      parts = line.strip().split("|")
+
+      if len(parts) != 3:
+        continue
+
+      file_name = parts[1].strip()
+
+      if file_name == filename:
+        deleted = True
+        continue
+
+      new_lines.append(line)
+
+    with open(HASH_FILE, "w") as file:
+      file.writelines(new_lines)
+        
+    if deleted:
+      print(">>> File deleted from database.")
+    else:
+      print(">>> File not registered.")
     
     if input(f"\nTry Another Menu? (y/n): ").lower() != "y":
       print("\nProgram Ended.\n")
