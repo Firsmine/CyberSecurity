@@ -232,6 +232,11 @@ while True:
       else:
         print(f"{filename:<20} MODIFIED")
         modified += 1
+      
+    print("\n===== SUMMARY =====")
+    print(f"Valid     : {valid}")
+    print(f"Modified  : {modified}")
+    print(f"Missing   : {missing}")
     
     if input(f"\nTry Another Menu? (y/n): ").lower() != "y":
       print("\nProgram Ended.\n")
